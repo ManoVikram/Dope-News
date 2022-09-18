@@ -23,6 +23,7 @@ class SearchBox extends StatelessWidget {
       ),
       child: TextField(
         controller: _searchController,
+        cursorColor: Colors.white,
         decoration: const InputDecoration(
           border: InputBorder.none,
           hintText: "Search",
@@ -31,7 +32,7 @@ class SearchBox extends StatelessWidget {
           ),
           suffixIcon: Icon(
             Icons.search,
-            // color: Color(0xFF3D3D3D),
+            color: Color(0xFF3D3D3D),
           ),
           suffixIconColor: Color(0xFF3D3D3D),
           suffixIconConstraints: BoxConstraints(

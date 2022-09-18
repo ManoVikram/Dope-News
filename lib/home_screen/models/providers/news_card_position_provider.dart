@@ -32,7 +32,22 @@ class NewsCardPositionProvider extends ChangeNotifier {
   }
 
   void endPosition() {
-    resetPosition();
+    _isBeingDragged = false;
+    notifyListeners();
+
+    final double x = position.dx;
+    final double y = position.dy;
+    final double delta = 140.0;
+
+    if (x > delta) {
+      _position += Offset(2 * screenSize.width, 0.0);
+    } else if (x < -delta) {
+      _position -= Offset(2 * screenSize.width, 0.0);
+    } else if (y < -delta) {
+      _position -= Offset(0.0, screenSize.height);
+    } else {
+      resetPosition();
+    }
   }
 
   void resetPosition() {
