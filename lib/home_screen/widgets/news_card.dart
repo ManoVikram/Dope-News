@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import './basic_news_card.dart';
 import './front_news_card.dart';
-import '../models/providers/news_card_position_provider.dart';
+import '../providers/news_card_position_provider.dart';
 
 class NewsCard extends StatefulWidget {
   const NewsCard({

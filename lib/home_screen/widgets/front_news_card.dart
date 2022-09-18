@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import './news_card.dart';
 import './basic_news_card.dart';
-import '../models/providers/news_card_position_provider.dart';
+import '../providers/news_card_position_provider.dart';
 
 class FrontNewsCard extends StatelessWidget {
   const FrontNewsCard({

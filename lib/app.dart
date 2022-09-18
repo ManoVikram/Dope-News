@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import './constants.dart';
 import '../home_screen/view/home_screen.dart';
-import '../home_screen/models/providers/news_card_position_provider.dart';
+import 'home_screen/providers/news_card_position_provider.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
