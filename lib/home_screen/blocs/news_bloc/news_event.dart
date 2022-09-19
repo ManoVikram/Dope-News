@@ -19,3 +19,7 @@ class SearchNews extends NewsEvent {
   @override
   List<Object> get props => [searchTerm];
 }
+
+class RemoveNews extends NewsEvent {
+  const RemoveNews();
+}

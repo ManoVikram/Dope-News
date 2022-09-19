@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../blocs/bloc.dart';
 import '../widgets/news_card.dart';
 import '../widgets/search_box.dart';
 
@@ -32,22 +34,65 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20.0),
-                Stack(
-                  children: List.generate(
-                    5,
-                    (index) => NewsCard(
-                      size: size,
-                      imageURL:
-                          "https://cdn.vox-cdn.com/thumbor/MuJUSwI3H6Yz5WOM-S05QhyQPaE=/0x0:1920x1080/1400x1400/filters:focal(960x540:961x541)/cdn.vox-cdn.com/uploads/chorus_asset/file/24004354/Celebrating_Steve___October_5___Apple_0_54_screenshot.png",
-                      newsURL:
-                          "https://newsapi.org/docs/endpoints/top-headlines",
-                      title: "Steve Jobs",
-                      description:
-                          "In 1996, Apple announced that it would buy NeXT for \$427 million. The deal was finalized in February 1997,[142] bringing Jobs back to the company he had cofounded. Jobs became de facto chief after then-CEO Gil Amelio was ousted in July 1997. In 1996, Apple announced that it would buy NeXT for \$427 million. The deal was finalized in February 1997,[142] bringing Jobs back to the company he had cofounded. Jobs became de facto chief after then-CEO Gil Amelio was ousted in July 1997.",
-                      from: "CNN News",
-                      isFront: index == 4 ? true : false,
-                    ),
-                  ),
+                BlocBuilder<NewsBloc, NewsState>(
+                  builder: (context, state) {
+                    if (state is NewsInitial) {
+                      BlocProvider.of<NewsBloc>(context)
+                          .add(const FetchTopNews());
+                    }
+
+                    if (state is NewsFetchingError) {
+                      return const Center(
+                        child: Text(
+                          'Something went wrong! Couldn\'t fetch News!',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                          ),
+                        ),
+                      );
+                    }
+
+                    if (state is TopNewsFetchingDone) {
+                      return Stack(
+                        children: state.topNews
+                            .map(
+                              (news) => NewsCard(
+                                size: size,
+                                imageURL: news.imageURL,
+                                newsURL: news.newsURL,
+                                title: news.title,
+                                description: news.description,
+                                from: news.from,
+                                isFront: state.topNews.last == news,
+                              ),
+                            )
+                            .toList(),
+                      );
+                    }
+
+                    if (state is SearchNewsFetchingDone) {
+                      return Stack(
+                        children: state.searchNews
+                            .map(
+                              (news) => NewsCard(
+                                size: size,
+                                imageURL: news.imageURL,
+                                newsURL: news.newsURL,
+                                title: news.title,
+                                description: news.description,
+                                from: news.from,
+                                isFront: state.searchNews.last == news,
+                              ),
+                            )
+                            .toList(),
+                      );
+                    }
+
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
                 ),
               ],
             ),

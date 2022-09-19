@@ -28,19 +28,20 @@ class News extends Equatable {
       ];
 
   factory News.fromJson(Map<String, dynamic> data) {
-    final title = data["title"] as String;
-    final description = data["description"] as String;
-    final from = data["source"]["name"] as String;
-    final publishedAt = data["publishedAt"] as String;
-    final imageURL = data["urlToImage"] as String;
+    final title = data["title"] as String?;
+    final description = data["description"] as String?;
+    final from = data["source"]["name"] as String?;
+    final publishedAt = data["publishedAt"] as String?;
+    final imageURL = data["urlToImage"] as String?;
     final newsURL = data["url"] as String;
 
     return News(
-      title: title,
-      description: description,
-      from: from,
-      publishedAt: publishedAt,
-      imageURL: imageURL,
+      title: title ?? "",
+      description: description ?? "",
+      from: from ?? "",
+      publishedAt: publishedAt ?? "",
+      imageURL: imageURL ??
+          "https://as1.ftcdn.net/v2/jpg/03/45/05/92/1000_F_345059232_CPieT8RIWOUk4JqBkkWkIETYAkmz2b75.jpg",
       newsURL: newsURL,
     );
   }

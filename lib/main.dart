@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import './app.dart';
+import './home_screen/repositories/repositories.dart';
+import './home_screen/data_providers/search_news_api_client.dart';
+import './home_screen/data_providers/top_news_api_client.dart';
 
 void main() {
-  runApp(const App());
+  final NewsRepository repository = NewsRepository(
+    topNewsAPIClient: TopNewsAPIClient(httpClient: http.Client()),
+    searchNewsAPIClient: SearchNewsAPIClient(httpClient: http.Client()),
+  );
+
+  runApp(App(repository: repository));
 }
