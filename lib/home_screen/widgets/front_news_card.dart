@@ -45,27 +45,30 @@ class FrontNewsCard extends StatelessWidget {
         provider.endPosition(context);
       },
       child: Consumer<NewsCardPositionProvider>(
-          builder: (context, provider, child) {
-        return LayoutBuilder(builder: (context, constraints) {
-          final double rotationAngle = provider.angle * (pi / 180);
-          final Offset center = constraints.smallest.center(Offset.zero);
-          final Matrix4 rotatedMatrix4 = Matrix4.identity()
-            ..translate(center.dx, center.dy)
-            ..rotateZ(rotationAngle)
-            ..translate(-center.dx, -center.dy);
+        builder: (context, provider, child) {
+          return LayoutBuilder(builder: (context, constraints) {
+            final double rotationAngle = provider.angle * (pi / 180);
+            final Offset center = constraints.smallest.center(Offset.zero);
+            final Matrix4 rotatedMatrix4 = Matrix4.identity()
+              ..translate(center.dx, center.dy)
+              ..rotateZ(rotationAngle)
+              ..translate(-center.dx, -center.dy);
 
-          return AnimatedContainer(
-            curve: Curves.easeInOut,
-            duration: Duration(milliseconds: provider.isBeingDragged ? 0 : 300),
-            transform: rotatedMatrix4
-              ..translate(provider.position.dx, provider.position.dy),
-            child: BasicNewsCard(
-              size: size,
-              widget: widget,
-            ),
-          );
-        });
-      }),
+            return AnimatedContainer(
+              curve: Curves.easeInOut,
+              duration:
+                  Duration(milliseconds: provider.isBeingDragged ? 0 : 300),
+              transform: rotatedMatrix4
+                ..translate(provider.position.dx, provider.position.dy),
+              child: child,
+            );
+          });
+        },
+        child: BasicNewsCard(
+          size: size,
+          widget: widget,
+        ),
+      ),
     );
   }
 }

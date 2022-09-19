@@ -45,17 +45,17 @@ class NewsCardPositionProvider extends ChangeNotifier {
     final NewsBloc bloc = context.read<NewsBloc>();
 
     if (x > delta) {
+      _position += Offset(2 * screenSize.width, 0.0);
       bloc.add(const RemoveNews());
-      _position += Offset(2 * screenSize.width / 6, 0.0);
     } else if (x < -delta) {
+      _position -= Offset(2 * screenSize.width, 0.0);
       bloc.add(const RemoveNews());
-      _position -= Offset(2 * screenSize.width / 6, 0.0);
     } else if (y < -delta) {
+      _position -= Offset(0.0, screenSize.height);
       bloc.add(const RemoveNews());
-      _position -= Offset(0.0, screenSize.height / 4);
-    } else {
-      resetPosition();
     }
+
+    resetPosition();
   }
 
   void resetPosition() {

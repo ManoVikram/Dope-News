@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/constants.dart';
 
 import '../blocs/bloc.dart';
 import '../widgets/news_card.dart';
@@ -41,8 +42,6 @@ class HomeScreen extends StatelessWidget {
                           .add(const FetchTopNews());
                     } */
 
-                    // print(state);
-
                     if (state is NewsFetchingError) {
                       return const Center(
                         child: Text(
@@ -56,43 +55,33 @@ class HomeScreen extends StatelessWidget {
                     }
 
                     if (state is NewsFetchingDone) {
-                      print("IN");
-                      print(state.news.length);
-                      return Stack(
-                        children: state.news
-                            .map(
-                              (news) => NewsCard(
-                                size: size,
-                                imageURL: news.imageURL,
-                                newsURL: news.newsURL,
-                                title: news.title,
-                                description: news.description,
-                                from: news.from,
-                                isFront: state.news.last == news,
+                      return state.news.isEmpty
+                          ? const Center(
+                              child: Text(
+                                "Oops... No more NEWS for today!",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  color: secondaryColor,
+                                ),
                               ),
                             )
-                            .toList(),
-                      );
+                          : Stack(
+                              children: state.news
+                                  .map(
+                                    (news) => NewsCard(
+                                      size: size,
+                                      imageURL: news.imageURL,
+                                      newsURL: news.newsURL,
+                                      title: news.title,
+                                      description: news.description,
+                                      from: news.from,
+                                      isFront: state.news.last == news,
+                                    ),
+                                  )
+                                  .toList(),
+                            );
                     }
-
-                    /* if (state is SearchNewsFetchingDone) {
-                      return Stack(
-                        children: state.searchNews
-                            .map(
-                              (news) => NewsCard(
-                                size: size,
-                                imageURL: news.imageURL,
-                                newsURL: news.newsURL,
-                                title: news.title,
-                                description: news.description,
-                                from: news.from,
-                                isFront: state.searchNews.last == news,
-                              ),
-                            )
-                            .toList(),
-                      );
-                    } */
-
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
