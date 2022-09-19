@@ -36,10 +36,12 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(height: 20.0),
                 BlocBuilder<NewsBloc, NewsState>(
                   builder: (context, state) {
-                    if (state is NewsInitial) {
+                    /* if (state is NewsInitial) {
                       BlocProvider.of<NewsBloc>(context)
                           .add(const FetchTopNews());
-                    }
+                    } */
+
+                    // print(state);
 
                     if (state is NewsFetchingError) {
                       return const Center(
@@ -53,9 +55,11 @@ class HomeScreen extends StatelessWidget {
                       );
                     }
 
-                    if (state is TopNewsFetchingDone) {
+                    if (state is NewsFetchingDone) {
+                      print("IN");
+                      print(state.news.length);
                       return Stack(
-                        children: state.topNews
+                        children: state.news
                             .map(
                               (news) => NewsCard(
                                 size: size,
@@ -64,14 +68,14 @@ class HomeScreen extends StatelessWidget {
                                 title: news.title,
                                 description: news.description,
                                 from: news.from,
-                                isFront: state.topNews.last == news,
+                                isFront: state.news.last == news,
                               ),
                             )
                             .toList(),
                       );
                     }
 
-                    if (state is SearchNewsFetchingDone) {
+                    /* if (state is SearchNewsFetchingDone) {
                       return Stack(
                         children: state.searchNews
                             .map(
@@ -87,7 +91,7 @@ class HomeScreen extends StatelessWidget {
                             )
                             .toList(),
                       );
-                    }
+                    } */
 
                     return const Center(
                       child: CircularProgressIndicator(),

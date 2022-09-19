@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../constants.dart';
+import '../blocs/bloc.dart';
 
 class SearchBox extends StatelessWidget {
   const SearchBox({
@@ -13,6 +15,8 @@ class SearchBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final NewsBloc bloc = BlocProvider.of<NewsBloc>(context, listen: false);
+
     return Container(
       height: 50.0,
       width: double.infinity,
@@ -24,18 +28,29 @@ class SearchBox extends StatelessWidget {
       child: TextField(
         controller: _searchController,
         cursorColor: Colors.white,
-        decoration: const InputDecoration(
+        textInputAction: TextInputAction.done,
+        onSubmitted: (value) {
+          bloc.add(SearchNews(searchTerm: _searchController.text));
+        },
+        decoration: InputDecoration(
           border: InputBorder.none,
           hintText: "Search",
-          hintStyle: TextStyle(
+          hintStyle: const TextStyle(
             color: Color(0xFF3D3D3D),
           ),
-          suffixIcon: Icon(
-            Icons.search,
-            color: Color(0xFF3D3D3D),
+          suffixIcon: GestureDetector(
+            child: GestureDetector(
+              onTap: () {
+                bloc.add(SearchNews(searchTerm: _searchController.text));
+              },
+              child: const Icon(
+                Icons.search,
+                color: Color(0xFF3D3D3D),
+              ),
+            ),
           ),
-          suffixIconColor: Color(0xFF3D3D3D),
-          suffixIconConstraints: BoxConstraints(
+          suffixIconColor: const Color(0xFF3D3D3D),
+          suffixIconConstraints: const BoxConstraints(
             minHeight: 36.0,
             minWidth: 36.0,
           ),

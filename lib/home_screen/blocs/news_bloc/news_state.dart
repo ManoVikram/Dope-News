@@ -15,22 +15,13 @@ class NewsFetchingInProcess extends NewsState {
   const NewsFetchingInProcess();
 }
 
-class TopNewsFetchingDone extends NewsState {
-  const TopNewsFetchingDone({required this.topNews});
+class NewsFetchingDone extends NewsState {
+  const NewsFetchingDone({required this.news});
 
-  final List<News> topNews;
-
-  @override
-  List<Object> get props => [topNews];
-}
-
-class SearchNewsFetchingDone extends NewsState {
-  const SearchNewsFetchingDone({required this.searchNews});
-
-  final List<News> searchNews;
+  final List<News> news;
 
   @override
-  List<Object> get props => [searchNews];
+  List<Object> get props => [news];
 }
 
 class NewsFetchingError extends NewsState {

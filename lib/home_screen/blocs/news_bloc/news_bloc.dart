@@ -13,9 +13,10 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
   NewsBloc({required this.repository}) : super(const NewsInitial()) {
     on<FetchTopNews>(fetchTopNews);
     on<SearchNews>(searchNews);
+    on<RemoveNews>(removeNews);
   }
 
-  late final List<News> news;
+  List<News> news = [];
 
   Future<void> fetchTopNews(FetchTopNews event, Emitter<NewsState> emit) async {
     emit(const NewsFetchingInProcess());
@@ -23,7 +24,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
     try {
       news = await repository.fetchTopNews();
 
-      emit(TopNewsFetchingDone(topNews: news));
+      emit(NewsFetchingDone(news: news));
     } catch (error) {
       print(error);
 
@@ -37,11 +38,21 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
     try {
       news = await repository.fetchSearchNews(event.searchTerm);
 
-      emit(SearchNewsFetchingDone(searchNews: news));
+      emit(NewsFetchingDone(news: news));
     } catch (error) {
       print(error);
 
       emit(const NewsFetchingError());
+    }
+  }
+
+  Future<void> removeNews(RemoveNews event, Emitter<NewsState> emit) async {
+    if (news.isNotEmpty) {
+      emit(
+        NewsFetchingDone(news: List.of(news)..removeLast()),
+      );
+
+      news.removeLast();
     }
   }
 }

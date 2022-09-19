@@ -1,8 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
+import '../blocs/bloc.dart';
 import './news_card.dart';
 import './basic_news_card.dart';
 import '../providers/news_card_position_provider.dart';
@@ -20,7 +22,10 @@ class FrontNewsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        BlocProvider.of<NewsBloc>(context, listen: false)
+            .add(const RemoveNews());
+      },
       onPanStart: (DragStartDetails details) {
         final NewsCardPositionProvider provider =
             Provider.of<NewsCardPositionProvider>(context, listen: false);
@@ -37,7 +42,7 @@ class FrontNewsCard extends StatelessWidget {
         final NewsCardPositionProvider provider =
             Provider.of<NewsCardPositionProvider>(context, listen: false);
 
-        provider.endPosition();
+        provider.endPosition(context);
       },
       child: Consumer<NewsCardPositionProvider>(
           builder: (context, provider, child) {

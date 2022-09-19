@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../blocs/bloc.dart';
 
 class NewsCardPositionProvider extends ChangeNotifier {
   bool _isBeingDragged = false;
@@ -31,7 +34,7 @@ class NewsCardPositionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void endPosition() {
+  void endPosition(BuildContext context) {
     _isBeingDragged = false;
     notifyListeners();
 
@@ -39,12 +42,17 @@ class NewsCardPositionProvider extends ChangeNotifier {
     final double y = position.dy;
     final double delta = 140.0;
 
+    final NewsBloc bloc = context.read<NewsBloc>();
+
     if (x > delta) {
-      _position += Offset(2 * screenSize.width, 0.0);
+      bloc.add(const RemoveNews());
+      _position += Offset(2 * screenSize.width / 6, 0.0);
     } else if (x < -delta) {
-      _position -= Offset(2 * screenSize.width, 0.0);
+      bloc.add(const RemoveNews());
+      _position -= Offset(2 * screenSize.width / 6, 0.0);
     } else if (y < -delta) {
-      _position -= Offset(0.0, screenSize.height);
+      bloc.add(const RemoveNews());
+      _position -= Offset(0.0, screenSize.height / 4);
     } else {
       resetPosition();
     }
