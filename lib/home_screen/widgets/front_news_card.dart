@@ -1,12 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-import '../blocs/bloc.dart';
 import './news_card.dart';
 import './basic_news_card.dart';
+import './app_web_view.dart';
 import '../providers/news_card_position_provider.dart';
 
 class FrontNewsCard extends StatelessWidget {
@@ -23,8 +22,14 @@ class FrontNewsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        BlocProvider.of<NewsBloc>(context, listen: false)
-            .add(const RemoveNews());
+        // BlocProvider.of<NewsBloc>(context, listen: false)
+        //     .add(const RemoveNews());
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AppWebView(url: widget.newsURL),
+          ),
+        );
       },
       onPanStart: (DragStartDetails details) {
         final NewsCardPositionProvider provider =

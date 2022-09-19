@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/constants.dart';
 
 import '../blocs/bloc.dart';
 import '../widgets/news_card.dart';
 import '../widgets/search_box.dart';
+import '../../constants.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
