@@ -4,4 +4,4 @@ A news app built with Flutter by fetching data from the [NewsAPI](https://newsap
 
 ## Screenshots
 
-![615shots_so](https://user-images.githubusercontent.com/42974191/191192769-0743c708-f64e-430b-86ec-4291740fc512.png)
+![UI](https://user-images.githubusercontent.com/42974191/191192769-0743c708-f64e-430b-86ec-4291740fc512.png)

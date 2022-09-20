@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 import './app.dart';
@@ -11,6 +12,8 @@ void main() {
     topNewsAPIClient: TopNewsAPIClient(httpClient: http.Client()),
     searchNewsAPIClient: SearchNewsAPIClient(httpClient: http.Client()),
   );
+
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   runApp(App(repository: repository));
 }
