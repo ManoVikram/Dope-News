@@ -1,16 +1,4 @@
-# news_app
 
-A new Flutter project.
+# Dope News
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+A news app built with Flutter by fetching data from the [NewsAPI](https://newsapi.org/). It uses BLoC architecture to interact with the API endpoints with data providers, repositories and update the app's state accordingly. The swipe card animation makes it more fun and intuitive to use the app.
